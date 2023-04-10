@@ -9,8 +9,9 @@ class Specialty(models.Model):
 
 class Company(models.Model):
     id = models.IntegerField(primary_key=True)
-    title = models.CharField(max_length=20)
-    location = models.CharField(max_length=20)
+    title = models.CharField(max_length=20)   # CR: неверное название поля. Смотри коммент в urls.py с рекомендациями по избеганию подобных ошибок :)
+    location = models.CharField(max_length=20) # CR: Что, если вакансия открыта в городе "Железногорск-Илимский" (21 символ) ?
+    # ТЗ додумано, дополнительные атрибуты полей, такие как длина, стоит уточнять у заказчика (в данном случае у куратора группы).
     logo = models.URLField(default='https://place-hold.it/100x60')
     description = models.TextField()
     employee_count = models.IntegerField()
@@ -25,10 +26,4 @@ class Vacancy(models.Model):
     description = models.TextField()
     salary_min = models.IntegerField()
     salary_max = models.IntegerField()
-    posted = models.DateField()
-
-
-
-
-
-
+    posted = models.DateField()  # CR: неверное название поля. Смотри коммент в urls.py с рекомендациями по избеганию подобных ошибок :)

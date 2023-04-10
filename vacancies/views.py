@@ -16,12 +16,17 @@ def main_view(request):
 
 
 def jobs_views(request, specialty_code=None):
+    # CR: нет аннотаций к функции, не понятно какая бизнес-логика подразумевается.
+    # CR: Для получения specialty лучше использовать get_object_or_404(),
+    # это функция "из коробки" джанго, которая под капотом
+    # содержит схожий функционал - на четыре строчки меньше, а делает то же самое!
     if specialty_code:
         try:
             specialty = Specialty.objects.get(code=specialty_code)
         except:
             raise Http404()
         vacancies = Vacancy.objects.filter(specialty__code=specialty_code).all()
+        # CR: здесь можно обойтись без all(), результатом всё равно будет QuerySet.
     else:
         specialty = None
         vacancies = Vacancy.objects.all()
@@ -47,6 +52,10 @@ def company_view(request, company_id):
 
 
 def vacancy_view(request, job_id):
+    # CR: переменную job_id лучше назвать vacancy_id по названию сущности.
+    # CR: Рекомендую хорошую статью про нейминг: https://habr.com/ru/companies/dododev/articles/714512/
+    # CR: нет аннотаций к функции, не понятно какая бизнес-логика подразумевается.
+    # CR: Лучше использовать get_object_or_404(), это функция "из коробки" джанго, которая под капотом содержит схожий функционал.
     try:
         vacancy = Vacancy.objects.get(id=job_id)
     except:
@@ -63,5 +72,3 @@ def custom_handler404(request, exception):
 
 def custom_handler500(request):
     return HttpResponseServerError('<br/><h1>Ошибка 500</h1><h2>Ошибка запроса. Отказано в обработке</h2>')
-
-
