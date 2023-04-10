@@ -20,11 +20,17 @@ from vacancies.views import main_view, jobs_views, company_view, vacancy_view, c
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
+    # CR: закоментированный код не должен попадать в продакшн (ветку master), лучше его удалить.
+    # CR: Если закомментировать весь неиспользуемый код,
+    # со временем он разрастется и будет сильно замедлять процесс разработки.
     path('', main_view, name='main'),
     path('vacancies/<str:specialty_code>', jobs_views, name='vacancies'),
+    # CR: по ТЗ необходимо было сделать эндпоинт vacancies/cat/<str:specialty_code>
     path('vacancies', jobs_views, name='vacancies_all'),
     path('company/<int:company_id>', company_view, name='company'),
-    path('vacancy/<int:job_id>', vacancy_view, name='vacancy'),
+    # CR: несоблюдение ТЗ, эндпоинт нужно было назвать companies/<int:company_id>.
+    # Избежать подобных ошибок в будущем поможет копирование, копируй вместо того чтобы переписывать! :)
+    path('vacancy/<int:job_id>', vacancy_view, name='vacancy'), # то же самое, как с companies/<int:company_id>
 ]
 
 handler404 = custom_handler404
